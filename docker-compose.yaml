@@ -25,72 +25,9 @@ services:
       restart_policy:
         condition: on-failure
     environment:
-      - NEW_RELIC_APP_NAME=ratings-service-$DATACENTER;ratings-service
+      - NEW_RELIC_APP_NAME=$SERVICE_NAME-$CLOUD_PROVIDER;$SERVICE_NAME
       - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
       - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
-      - NEW_RELIC_LABELS=datacenter:$DATACENTER;service:ratings
-  payment:
-    build:
-      context: payment
-    image: $GITHUB_USER/rs-payment:$TAG
-    depends_on:
-      - rabbitmq
-    networks:
-      - robot-shop
-    environment:
-      - NEW_RELIC_APP_NAME=payment-service-$DATACENTER;payment-service
-      - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
-      - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
-      - NEW_RELIC_LABELS=datacenter:$DATACENTER;service:payment
-      - AMQP_HOST=rabbitmq
-      - CART_HOST=cart
-      - USER_HOST=user
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-  dispatch:
-    build:
-      context: dispatch
-    image: $GITHUB_USER/rs-dispatch:$TAG
-    depends_on:
-      - rabbitmq
-    networks:
-      - robot-shop
-    environment:
-      - NEW_RELIC_APP_NAME=dispatch-service-$DATACENTER;dispatch-service
-      - NEW_RELIC_LICENSE_KEY=$NEW_RELIC_LICENSE_KEY
-      - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
-      - AMQP_HOST=rabbitmq
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-  web:
-    build:
-      context: web
-    image: $GITHUB_USER/rs-web:$TAG
-    depends_on:
-      - catalogue
-      - user
-      - shipping
-      - payment
-    ports:
-      - "8888:8080"
-    networks:
-      - robot-shop
-    deploy:
-      replicas: 1
-      restart_policy:
-        condition: on-failure
-    environment:
-      - NEW_RELIC_BROWSER_LICENSE_KEY=$NEW_RELIC_BROWSER_LICENSE_KEY
-      - NEW_RELIC_BROWSER_APPLICATION_ID=$NEW_RELIC_BROWSER_APPLICATION_ID
-      - CATALOGUE_HOST=catalogue
-      - USER_HOST=user
-      - CART_HOST=cart
-      - SHIPPING_HOST=shipping
-      - PAYMENT_HOST=payment
-      - RATINGS_HOST=ratings
+      - NEW_RELIC_LABELS=datacenter:$CLOUD_PROVIDER;service:$SERVICE_NAME
 networks:
   robot-shop:
