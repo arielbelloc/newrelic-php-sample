@@ -17,7 +17,7 @@ In this particular use case we are considering a scenario where a service is dep
 We can easily fulfill this requirement by setting up a CLOUD_PROVIDER variable, adding an alias application name for the consolidated view as well as adding labels to better organize them:
 
 - CLOUD_PROVIDER='YOUR_CLOUD_PROVIDER_NAME_HERE'
-- NEW_RELIC_APP_NAME=rsample-service-$CLOUD_PROVIDER;sample-service
+- NEW_RELIC_APP_NAME=sample-service-$CLOUD_PROVIDER;sample-service
 - NEW_RELIC_LICENSE_KEY='YOUR_LICENSE_KEY_HERE'
 - NEW_RELIC_DISTRIBUTED_TRACING_ENABLED=true
 - NEW_RELIC_LABELS=cloud_provider:$CLOUD_PROVIDER;service:sample-service
