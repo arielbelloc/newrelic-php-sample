@@ -14,7 +14,7 @@ Goal for this repo is to present best practices on how to deploy the New PHP age
 
 In this particular use case we are considering a scenario where a service is deployed to different cloud providers. Traffic is switched / balanced across different providers and both a provider view and a consolidated view are required.
 
-We can easily fulfill this requirement by setting up a CLOUD_PROVIDER variable, adding an alias application name for the consolidate view and labels to better organize them:
+We can easily fulfill this requirement by setting up a CLOUD_PROVIDER variable, adding an alias application name for the consolidated view as well as adding labels to better organize them:
 
 - CLOUD_PROVIDER='YOUR_CLOUD_PROVIDER_NAME_HERE'
 - NEW_RELIC_APP_NAME=rsample-service-$CLOUD_PROVIDER;sample-service
